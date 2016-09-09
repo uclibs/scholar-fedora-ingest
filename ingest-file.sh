@@ -18,13 +18,17 @@ CONTROL_GROUP="M"
 VERSIONABLE="true"
 DS_STATE="A"
 FLASH="true"
+#RIGHTS_FILE="rightsMetadata.xml"
 
 printf "\n\nDeleteing the existing content datatream...\n"
 $CURL_PATH -i -XDELETE "$FEDORA_URL/objects/$FILE_PID/datastreams/content" -u $FEDORA_USER:$FEDORA_PASSWORD
+
+# Create the rightsMetadata
+#$CURL_PATH -i -H -XPOST -F file="@$RIGHTS_FILE" -u $FEDORA_USER:$FEDORA_PASSWORD "$FEDORA_URL/objects/$FILE_PID/datastreams/rightsMetadata?dsLabel=&formatURI=&checksumType=&altIDs=&mimeType=text/xml&controlGroup=M&versionable=true&dsState=A&flash=$FLASH"
 
 printf "\n\nCreating new content datastream and uploading file...\n"
 $CURL_PATH -i -H -XPOST -F file="@$FILE_NAME" -u $FEDORA_USER:$FEDORA_PASSWORD "$FEDORA_URL/objects/$FILE_PID/datastreams/content?dsLabel=$FILE_NAME&formatURI=$FORMAT_URI&checksumType=$CHECKSUM_TYPE&altIDs=$ALT_IDS&mimeType=$MIME_TYPE&controlGroup=$CONTROL_GROUP&versionable=$VERSIONABLE&dsState=$DS_STATE&flash=$FLASH"
 
 printf "\n\nNext steps in rails console:"
-printf "\nActiveFedora::Base.reindex_everything"
-printf "\nSufia.queue.push(CharacterizeJob.new('$FILE_PID'))\n"
+printf "\n  ActiveFedora::Base.reindex_everything"
+printf "\n  Sufia.queue.push(CharacterizeJob.new('$FILE_PID'))\n"
