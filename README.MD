@@ -12,7 +12,7 @@
 
 * curl -i http://localhost:8080/fedora/objects/test:02/datastreams/DS1
 
-### To create create a new datastream
+### To create a new datastream
  
 regular post (always creates inline (I) datastream.  Will fail if not valid XML):
 * curl -i -H "Content-type: text/xml" -XPOST --data-binary @build.xml -u fedoraAdmin:fedoraAdmin "http://localhost:8080/fedora/objects/test:02/datastreams/DS1?dsLabel=A%20Test%20Datastream&altIDs=3333" 
