@@ -29,6 +29,7 @@ $CURL_PATH -i -XDELETE "$FEDORA_URL/objects/$FILE_PID/datastreams/content" -u $F
 printf "\n\nCreating new content datastream and uploading file...\n"
 $CURL_PATH -i -H -XPOST -F file="@$FILE_NAME" -u $FEDORA_USER:$FEDORA_PASSWORD "$FEDORA_URL/objects/$FILE_PID/datastreams/content?dsLabel=$FILE_NAME&formatURI=$FORMAT_URI&checksumType=$CHECKSUM_TYPE&altIDs=$ALT_IDS&mimeType=$MIME_TYPE&controlGroup=$CONTROL_GROUP&versionable=$VERSIONABLE&dsState=$DS_STATE&flash=$FLASH"
 
-printf "\n\nNext steps in rails console:"
-printf "\n  ActiveFedora::Base.reindex_everything"
+printf "\n\nNext steps in rails console on the web server:"
+printf "\n  file = GenericFile.find('$FILE_PID')"
+printf "\n  file.to_solr"
 printf "\n  Sufia.queue.push(CharacterizeJob.new('$FILE_PID'))\n"
