@@ -31,5 +31,7 @@ $CURL_PATH -i -H -XPOST -F file="@$FILE_NAME" -u $FEDORA_USER:$FEDORA_PASSWORD "
 
 printf "\n\nNext steps in rails console on the web server:"
 printf "\n  file = GenericFile.find('$FILE_PID')"
+printf "\n  file.owner = 'someone@example.com'"
+printf "\n  file.save"
 printf "\n  file.to_solr"
 printf "\n  Sufia.queue.push(CharacterizeJob.new('$FILE_PID'))\n"
